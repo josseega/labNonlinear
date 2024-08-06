@@ -1,0 +1,58 @@
+function [out, resFig] = massSpring(y0,tfinal)
+%%
+%simulation parameters
+t0 = 0;
+st = 1e-3;
+
+
+%% Parameters
+
+
+
+%% Numerical Simulation
+
+
+
+
+
+%% Cart-Pole Dynamics
+
+f_1 = @(x) x(2);
+f_2 = @(x) x(1);
+
+F = @(x) [f_1(x) ; f_2(x); f_3(x) ; f_4(x)] ;
+
+%solve
+% made it to solve yp = F(t,y)
+% with ic y(t0) = y
+y = y0;
+yout = y;
+zOut = Z(y0);
+tauOut= u(y0);
+normOut = norms(y0);
+nuOut= nu(y0);
+count=0
+for t = t0: st: tfinal-st
+    %% oila
+        s = F(y);
+        y = y + st*s;
+        if mod(t,resFig) == 0
+            nuOut= [nuOut nu(y)];
+            tauOut= [tauOut tau(y)];
+            yout = [yout y];
+            zOut = [zOut Z(y)];
+            normOut = [normOut norms(y)];
+            clc
+            count = count+1
+        end
+end
+
+out.x = yout;
+out.nuOut= nuOut;
+out.tauOut= tauOut;
+out.zOut= zOut;
+out.normOut= normOut;
+
+% clearvars  -except out st resFig
+
+end
